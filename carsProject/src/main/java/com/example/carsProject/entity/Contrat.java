@@ -1,11 +1,8 @@
 package com.example.carsProject.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ElementCollection;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +17,8 @@ public class Contrat {
     public List<String> regles = new ArrayList<>();
 
     // must add foreign key here
+    @OneToOne(mappedBy = "contrat", cascade = CascadeType.ALL)
+    private Reservation reservation;
 
     public boolean confirmation;
 }

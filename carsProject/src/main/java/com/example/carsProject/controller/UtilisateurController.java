@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/utilisateurs")
+@RequestMapping("/api/utilisateur")
 @RequiredArgsConstructor
 public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;
 
     // Ajouter un utilisateur
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Utilisateur> addUtilisateur(@RequestBody Utilisateur utilisateur) {
         Utilisateur newUtilisateur = utilisateurService.addUtilisateur(utilisateur);
         return ResponseEntity.ok(newUtilisateur);

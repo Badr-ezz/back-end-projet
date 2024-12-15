@@ -1,12 +1,7 @@
 package com.example.carsProject.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -24,12 +19,19 @@ public class Reservation {
     public String status;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_utilisateur", nullable = false)
-//    public Utilisateur utilisateur;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "id_vehicule", nullable = false)
-//    public Vehicule vehicule;
+    @ManyToOne
+    @JoinColumn(name = "id_utilisateur", nullable = false)
+    public Utilisateur utilisateur;
 
+    @ManyToOne
+    @JoinColumn(name = "id_vehicule", nullable = false)
+    public Vehicule vehicule;
+
+    @OneToOne
+    @JoinColumn(name = "id_contrat")
+    private Contrat contrat;
+
+    @OneToOne
+    @JoinColumn(name = "id_paiment")
+    private Paiment paiment;
 }

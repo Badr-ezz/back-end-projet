@@ -3,9 +3,11 @@ package com.example.carsProject.repository;
 import com.example.carsProject.entity.RoleType;
 import com.example.carsProject.entity.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
     // Récupérer les utilisateurs par rôle
      List<Utilisateur> findByRole(RoleType role);

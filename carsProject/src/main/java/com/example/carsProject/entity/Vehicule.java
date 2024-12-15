@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 public class Vehicule {
@@ -29,4 +31,6 @@ public class Vehicule {
 
     public Integer nbrReservateurs;
 
+    @OneToMany(mappedBy = "vehicule",cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 }
