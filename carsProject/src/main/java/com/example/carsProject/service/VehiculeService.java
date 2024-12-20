@@ -6,6 +6,7 @@ import com.example.carsProject.repository.VehiculeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -79,6 +80,26 @@ public class VehiculeService {
     public List<Vehicule> getVehiculeByStatus(String status){
         return vehiculeRepository.findByStatus(status);
     };
+
+    public List<String> getAllUniqueMarques() {
+        return vehiculeRepository.findDistinctMarque();
+    }
+
+    public List<String> getAllUniqueTypes() {
+        return vehiculeRepository.findDistinctVehiculeType();
+    }
+
+    public List<Integer> getAllUniqueAnnees() {
+        List<Integer> annees = vehiculeRepository.findDistinctAnnee();
+        return annees != null ? annees : new ArrayList<>();
+    }
+
+    public List<String> getAllUniqueStatus() {
+        return vehiculeRepository.findDistinctStatus();
+    }
+    public List<Vehicule> getFilteredVehicules(String marque, String type, Integer annee, String disponibilite, Float tarif) {
+        return vehiculeRepository.findFilteredVehicules(marque, type, annee, disponibilite, tarif);
+    }
 
 
 

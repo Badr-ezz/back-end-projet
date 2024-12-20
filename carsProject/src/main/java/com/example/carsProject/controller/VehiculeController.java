@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/vehicules")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class VehiculeController {
     public final VehiculeService vehiculeService;
 
@@ -70,5 +72,36 @@ public class VehiculeController {
     public ResponseEntity<List<Vehicule>> getByAnnee(@RequestParam Integer annee){
         return ResponseEntity.ok(vehiculeService.getVehiculeByAnnee(annee));
     }
-//    @DeleteMapping()
+    @GetMapping("/marques")
+    public ResponseEntity<List<String>> getAllUniqueMarques() {
+        return ResponseEntity.ok(vehiculeService.getAllUniqueMarques());
+    }
+
+    @GetMapping("/types")
+    public ResponseEntity<List<String>> getAllUniqueTypes() {
+        return ResponseEntity.ok(vehiculeService.getAllUniqueTypes());
+    }
+
+    @GetMapping("/annees")
+    public ResponseEntity<List<Integer>> getAllUniqueAnnees() {
+        List<Integer> annees = vehiculeService.getAllUniqueAnnees();
+        return ResponseEntity.ok(annees != null ? annees : new ArrayList<>());
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<String>> getAllUniqueStatus() {
+        return ResponseEntity.ok(vehiculeService.getAllUniqueStatus());
+    }
+
+
+    @GetMapping("filtered")
+    public List<Vehicule> getFilteredVehicules(
+            @RequestParam(required = false) String marque,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) Integer annee,
+            @RequestParam(required = false) String disponibilite,
+            @RequestParam(required = false) Float tarif) {
+        return vehiculeService.getFilteredVehicules(marque, type, annee, disponibilite, tarif);
+    }
+
 }

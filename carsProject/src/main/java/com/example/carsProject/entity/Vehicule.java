@@ -31,6 +31,10 @@ public class Vehicule {
 
     public Integer nbrReservateurs;
 
+    public String imagepath;
+
+    public String logoPath;
+
     @OneToMany(mappedBy = "vehicule",cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 }
