@@ -19,6 +19,8 @@ public class Vehicule {
 
     public float prix;
 
+    public String description;
+
     public String vehiculeType;
 
     public Integer quantite;
@@ -33,7 +35,18 @@ public class Vehicule {
 
     public String imagepath;
 
+    public String detailpic;
+
     public String logoPath;
+
+
+    public String features;
+
+    public Integer maxCount;
+
+    public String vitesse;
+
+    public String Fuel;
 
     @OneToMany(mappedBy = "vehicule",cascade = CascadeType.ALL)
     private List<Reservation> reservations;
