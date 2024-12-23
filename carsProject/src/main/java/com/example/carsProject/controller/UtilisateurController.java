@@ -3,7 +3,9 @@ package com.example.carsProject.controller;
 import com.example.carsProject.entity.RoleType;
 import com.example.carsProject.entity.Utilisateur;
 import com.example.carsProject.service.UtilisateurService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +14,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/utilisateur")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UtilisateurController {
 
     private final UtilisateurService utilisateurService;
+
+    @PostMapping("/login")
+    public String login(@RequestBody Utilisateur utilisateur) {
+        return  utilisateurService.verify(utilisateur);
+    }
+
+    @PostMapping("/ttt")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7); // Extract token
+            System.out.println("the token is " + token);
+            String result = utilisateurService.logout(token);
+            return ResponseEntity.ok(result);
+        }
+        System.out.println("nullllll");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or missing Authorization header.");
+    }
 
     // Ajouter un utilisateur
     @PostMapping
@@ -94,10 +116,10 @@ public class UtilisateurController {
     }
 
     // Filtrer les utilisateurs par email exact
-    @GetMapping("/byEmail")
-    public ResponseEntity<List<Utilisateur>> getUtilisateursByEmail(@RequestParam String email) {
-        return ResponseEntity.ok(utilisateurService.getUtilisateursByEmail(email));
-    }
+//    @GetMapping("/byEmail")
+//    public ResponseEntity<List<Utilisateur>> getUtilisateursByEmail(@RequestParam String email) {
+//        return ResponseEntity.ok(utilisateurService.getUtilisateursByEmail(email));
+//    }
 
     // Filtrer les utilisateurs par numéro de téléphone exact
     @GetMapping("/byPhone")

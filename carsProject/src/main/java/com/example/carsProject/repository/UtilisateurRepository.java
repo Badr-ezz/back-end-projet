@@ -25,9 +25,11 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     List<Utilisateur> findByLastNameContaining(String keyword);
 
     // Rechercher les Utilisateurs par email exact
-    List<Utilisateur> findByEmail(String email);
+//    List<Utilisateur> findByEmail(String email);
 
     // Rechercher les Utilisateurs par numéro de téléphone exact
     List<Utilisateur> findByPhone(String phone);
+
+    Utilisateur findByEmail(String email);
 
 }

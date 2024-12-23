@@ -18,6 +18,9 @@ public class Utilisateur {
 
     private String lastName;
 
+    private String password;
+
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String phone;

@@ -4,6 +4,11 @@ import com.example.carsProject.entity.RoleType;
 import com.example.carsProject.entity.Utilisateur;
 import com.example.carsProject.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +19,13 @@ public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
 
+    private final AuthenticationManager authenticationManager;
+
+    private final JWTService jwtService;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
+
     // Compter le nombre total d'utilisateurs
         public Long countUtilisateurs() {
         return utilisateurRepository.count();
@@ -21,6 +33,7 @@ public class UtilisateurService {
 
     // Ajouter un utilisateur
     public Utilisateur addUtilisateur(Utilisateur utilisateur) {
+        utilisateur.setPassword(encoder.encode(utilisateur.getPassword()));
         return utilisateurRepository.save(utilisateur);
     }
 
@@ -87,13 +100,28 @@ public class UtilisateurService {
     }
 
     // Filtrer les Utilisateurs par email exact
-    public List<Utilisateur> getUtilisateursByEmail(String email) {
-        return utilisateurRepository.findByEmail(email);
-    }
+//    public List<Utilisateur> getUtilisateursByEmail(String email) {
+//        return utilisateurRepository.findByEmail(email);
+//    }
 
     // Filtrer les Utilisateurs par numéro de téléphone exact
     public List<Utilisateur> getUtilisateursByPhone(String phone) {
         return utilisateurRepository.findByPhone(phone);
     }
 
+    public String verify(Utilisateur user) {
+        Authentication auth = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+        if(auth.isAuthenticated()) {
+//            return jwtService.generateToken(user.getUsername());
+            Utilisateur foundUser = utilisateurRepository.findByEmail(user.getEmail());
+            System.out.println(foundUser);
+            return jwtService.generateToken(foundUser);
+        }
+        return "fail";
+    }
+
+    public String logout (String token) {
+        return jwtService.logout(token);
+    }
 }

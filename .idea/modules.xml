@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/carsProject/Ihab.iml" filepath="$PROJECT_DIR$/carsProject/Ihab.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/back-end-projet.iml" filepath="$PROJECT_DIR$/.idea/back-end-projet.iml" />
     </modules>
   </component>
