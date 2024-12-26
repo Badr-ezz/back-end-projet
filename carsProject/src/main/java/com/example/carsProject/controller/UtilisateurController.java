@@ -38,8 +38,15 @@ public class UtilisateurController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or missing Authorization header.");
     }
 
+    @PostMapping("/checkuserbyemail")
+    public Boolean checkExistingAccount(@RequestBody Utilisateur  user) {
+        System.out.println(user.getEmail());
+        Utilisateur foundUser = utilisateurService.getUtilisateurByEmail(user.getEmail());
+        return foundUser == null;   // the foundUser must be null to create a new account
+    }
+
     // Ajouter un utilisateur
-    @PostMapping
+    @PostMapping("/addUser")
     public ResponseEntity<Utilisateur> addUtilisateur(@RequestBody Utilisateur utilisateur) {
         Utilisateur newUtilisateur = utilisateurService.addUtilisateur(utilisateur);
         return ResponseEntity.ok(newUtilisateur);
@@ -53,7 +60,7 @@ public class UtilisateurController {
     }
 
     // Récupérer tous les utilisateurs
-    @GetMapping
+    @GetMapping("/AllUtilisateurs")
     public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
         return ResponseEntity.ok(utilisateurService.getAllUtilisateurs());
     }

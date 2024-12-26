@@ -51,6 +51,11 @@ public class UtilisateurService {
         return utilisateurRepository.save(utilisateur);
     }
 
+    // this is for login check
+    public Utilisateur getUtilisateurByEmail(String email){
+        return utilisateurRepository.findByEmail(email);
+    }
+
     // Récupérer tous les utilisateurs
     public List<Utilisateur> getAllUtilisateurs() {
         return utilisateurRepository.findAll();
