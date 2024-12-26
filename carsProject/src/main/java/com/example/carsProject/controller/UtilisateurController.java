@@ -42,7 +42,7 @@ public class UtilisateurController {
     public Boolean checkExistingAccount(@RequestBody Utilisateur  user) {
         System.out.println(user.getEmail());
         Utilisateur foundUser = utilisateurService.getUtilisateurByEmail(user.getEmail());
-        return foundUser == null;   // the foundUser must be null to create a new account
+        return foundUser != null;   // the foundUser must be null to create a new account
     }
 
     // Ajouter un utilisateur
