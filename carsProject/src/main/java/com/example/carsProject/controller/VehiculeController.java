@@ -17,6 +17,12 @@ import java.util.List;
 public class VehiculeController {
     public final VehiculeService vehiculeService;
 
+    // Compter le nombre total des vehicules
+    @GetMapping("/count")
+    public ResponseEntity<Long> countVehicules() {
+        return ResponseEntity.ok(vehiculeService.countVehicule());
+    }
+
     @GetMapping
     public List<Vehicule> getAll() {
         return vehiculeService.getAllUVehicule();

@@ -38,8 +38,18 @@ public class UtilisateurController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid or missing Authorization header.");
     }
 
+    @PostMapping("/checkuserbyemail")
+    public ResponseEntity<Utilisateur> checkExistingAccount(@RequestBody Utilisateur  user) {
+        System.out.println(user.getEmail());
+        Utilisateur foundUser = utilisateurService.getUtilisateurByEmail(user.getEmail());
+        if(foundUser != null) {
+            return ResponseEntity.ok(foundUser);
+        }
+        return null;   // the foundUser must be null to create a new account
+    }
+
     // Ajouter un utilisateur
-    @PostMapping
+    @PostMapping("/addUser")
     public ResponseEntity<Utilisateur> addUtilisateur(@RequestBody Utilisateur utilisateur) {
         Utilisateur newUtilisateur = utilisateurService.addUtilisateur(utilisateur);
         return ResponseEntity.ok(newUtilisateur);
@@ -48,12 +58,14 @@ public class UtilisateurController {
     // Mettre à jour un utilisateur existant
     @PutMapping("/{id}")
     public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable Long id, @RequestBody Utilisateur utilisateurDetails) {
+        System.out.println("user id " + id);
+        System.out.println("data to change  " + utilisateurDetails);
         Utilisateur updatedUtilisateur = utilisateurService.updateUtilisateur(id, utilisateurDetails);
         return ResponseEntity.ok(updatedUtilisateur);
     }
 
     // Récupérer tous les utilisateurs
-    @GetMapping
+    @GetMapping("/AllUtilisateurs")
     public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
         return ResponseEntity.ok(utilisateurService.getAllUtilisateurs());
     }

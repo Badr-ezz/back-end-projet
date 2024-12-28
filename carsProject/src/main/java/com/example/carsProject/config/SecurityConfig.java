@@ -38,12 +38,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http.csrf(customizer -> customizer.disable()).
+        return http
+                .cors(Customizer.withDefaults())
+                .csrf(customizer -> customizer.disable()).
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("/register","/api/utilisateur/login")   // this allow to acces to the login and register without authentication
-                        .permitAll()       // and this that help to do that
+                        .requestMatchers("/api/utilisateur/**","/api/utilisateur/login",
+                        "/api/vehicules/filtered")
+                        .permitAll()
 
+                        .requestMatchers(HttpMethod.GET, "/api/vehicules/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/utilisateur/checkuserbyemail").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/utilisateur/addUser").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/utilisateur/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/utilisateur/**").hasRole("ADMIN")
+
 
                         .anyRequest().authenticated()).
                 httpBasic(Customizer.withDefaults()).
@@ -57,6 +66,22 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Remplacez par vos origines autorisées
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setExposedHeaders(List.of("Authorization")); // Pour permettre au client d'accéder au JWT dans les réponses
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {

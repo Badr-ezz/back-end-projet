@@ -14,7 +14,7 @@ import java.util.List;
 public class VehiculeService {
     public final VehiculeRepository vehiculeRepository;
 
-    public Long coutVehicule() { return vehiculeRepository.count(); }
+    public Long countVehicule() { return vehiculeRepository.count(); }
 
     public Vehicule addVehicule(Vehicule vehicule) {
         return vehiculeRepository.save(vehicule);
