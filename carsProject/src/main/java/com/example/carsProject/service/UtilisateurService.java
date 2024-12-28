@@ -47,6 +47,7 @@ public class UtilisateurService {
         utilisateur.setEmail(utilisateurDetails.getEmail());
         utilisateur.setPhone(utilisateurDetails.getPhone());
         utilisateur.setRole(utilisateurDetails.getRole());
+        utilisateur.setPassword(encoder.encode(utilisateurDetails.getPassword()));
 
         return utilisateurRepository.save(utilisateur);
     }

@@ -39,10 +39,13 @@ public class UtilisateurController {
     }
 
     @PostMapping("/checkuserbyemail")
-    public Boolean checkExistingAccount(@RequestBody Utilisateur  user) {
+    public ResponseEntity<Utilisateur> checkExistingAccount(@RequestBody Utilisateur  user) {
         System.out.println(user.getEmail());
         Utilisateur foundUser = utilisateurService.getUtilisateurByEmail(user.getEmail());
-        return foundUser != null;   // the foundUser must be null to create a new account
+        if(foundUser != null) {
+            return ResponseEntity.ok(foundUser);
+        }
+        return null;   // the foundUser must be null to create a new account
     }
 
     // Ajouter un utilisateur
@@ -54,7 +57,9 @@ public class UtilisateurController {
 
     // Mettre à jour un utilisateur existant
     @PutMapping("/{id}")
-    public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable Long id, @RequestBody Utilisateur utilisateurDetails) {
+        public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable Long id, @RequestBody Utilisateur utilisateurDetails) {
+        System.out.println("user id " + id);
+        System.out.println("data to change  " + utilisateurDetails);
         Utilisateur updatedUtilisateur = utilisateurService.updateUtilisateur(id, utilisateurDetails);
         return ResponseEntity.ok(updatedUtilisateur);
     }

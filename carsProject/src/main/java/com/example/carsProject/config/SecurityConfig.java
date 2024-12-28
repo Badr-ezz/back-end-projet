@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/utilisateur/checkuserbyemail").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/utilisateur/addUser").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/utilisateur/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/utilisateur/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()).
