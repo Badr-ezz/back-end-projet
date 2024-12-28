@@ -8,7 +8,7 @@ public class Facture {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "id_paiment")

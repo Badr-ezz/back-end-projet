@@ -1,37 +1,44 @@
 package com.example.carsProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
+@Data
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
-    public Date dateDebut;
+    private Date dateDebut;
 
-    public Date dateFin;
+    private Date dateFin;
 
-    public String status;
+    private String status;
 
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
-    public Utilisateur utilisateur;
+    @JsonBackReference
+    private Utilisateur utilisateur;
 
     @ManyToOne
     @JoinColumn(name = "id_vehicule", nullable = false)
-    public Vehicule vehicule;
+    @JsonBackReference
+    private Vehicule vehicule;
 
     @OneToOne
     @JoinColumn(name = "id_contrat")
+    @JsonBackReference
     private Contrat contrat;
 
     @OneToOne
     @JoinColumn(name = "id_paiment")
+    @JsonBackReference
     private Paiment paiment;
 }
