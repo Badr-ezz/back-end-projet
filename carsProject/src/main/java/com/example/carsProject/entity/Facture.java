@@ -2,8 +2,10 @@ package com.example.carsProject.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 public class Facture {
 
     @Id
