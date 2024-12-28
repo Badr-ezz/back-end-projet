@@ -24,22 +24,18 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
-    @JsonIgnore
     private Utilisateur utilisateur;
 
     @ManyToOne
     @JoinColumn(name = "id_vehicule", nullable = false)
-    @JsonIgnore
     private Vehicule vehicule;
 
     @OneToOne
     @JoinColumn(name = "id_contrat")
-    @JsonIgnore
     private Contrat contrat;
 
     @OneToOne
     @JoinColumn(name = "id_paiment")
-    @JsonIgnore
     private Paiment paiment;
 
     @Override
