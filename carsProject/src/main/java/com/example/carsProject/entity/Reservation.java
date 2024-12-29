@@ -1,6 +1,7 @@
 package com.example.carsProject.entity;
 
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,21 +25,28 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
-    @JsonBackReference
     private Utilisateur utilisateur;
 
     @ManyToOne
     @JoinColumn(name = "id_vehicule", nullable = false)
-    @JsonBackReference
     private Vehicule vehicule;
 
     @OneToOne
     @JoinColumn(name = "id_contrat")
-    @JsonBackReference
     private Contrat contrat;
 
     @OneToOne
     @JoinColumn(name = "id_paiment")
-    @JsonBackReference
     private Paiment paiment;
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
 }

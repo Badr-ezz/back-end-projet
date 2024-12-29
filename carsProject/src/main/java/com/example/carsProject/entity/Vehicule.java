@@ -1,7 +1,8 @@
 package com.example.carsProject.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -50,6 +51,6 @@ public class Vehicule {
     public String Fuel;
 
     @OneToMany(mappedBy = "vehicule",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Reservation> reservations;
 }
