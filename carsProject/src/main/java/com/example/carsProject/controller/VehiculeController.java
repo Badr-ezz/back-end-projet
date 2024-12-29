@@ -101,6 +101,7 @@ public class VehiculeController {
     }
 
 
+
     @GetMapping("filtered")
     public List<Vehicule> getFilteredVehicules(
             @RequestParam(required = false) String marque,

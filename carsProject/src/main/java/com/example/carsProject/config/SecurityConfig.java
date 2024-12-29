@@ -46,7 +46,7 @@ public class SecurityConfig {
                         "/api/vehicules/filtered")
                         .permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/api/vehicules/**").permitAll()
+
                         .requestMatchers(HttpMethod.DELETE, "/api/vehicules/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/vehicules/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/vehicules/**").permitAll()
@@ -54,6 +54,12 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
 
+
+                        .requestMatchers(HttpMethod.GET, "/api/vehicules/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/utilisateur/checkuserbyemail").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/utilisateur/addUser").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/utilisateur/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/utilisateur/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()).

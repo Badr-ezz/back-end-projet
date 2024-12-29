@@ -2,19 +2,21 @@ package com.example.carsProject.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 public class Contrat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @ElementCollection
-    public List<String> regles = new ArrayList<>();
+    private List<String> regles = new ArrayList<>();
 
     // must add foreign key here
     @OneToOne(mappedBy = "contrat", cascade = CascadeType.ALL)

@@ -2,23 +2,25 @@ package com.example.carsProject.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
+@Data
 public class Paiment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
-    public int montant;
+    private int montant;
 
-    public Date datePaiment;
+    private Date datePaiment;
 
-    public String modePaiment;
+    private String modePaiment;
 
-    public String status;
+    private String status;
 
     @OneToOne(mappedBy = "paiment", cascade = CascadeType.ALL)
     private Reservation reservation;

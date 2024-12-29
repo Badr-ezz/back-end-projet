@@ -1,31 +1,34 @@
 package com.example.carsProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
+@Data
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
-    public Date dateDebut;
+    private Date dateDebut;
 
-    public Date dateFin;
+    private Date dateFin;
 
-    public String status;
+    private String status;
 
 
     @ManyToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
-    public Utilisateur utilisateur;
+    private Utilisateur utilisateur;
 
     @ManyToOne
     @JoinColumn(name = "id_vehicule", nullable = false)
-    public Vehicule vehicule;
+    private Vehicule vehicule;
 
     @OneToOne
     @JoinColumn(name = "id_contrat")
@@ -34,4 +37,15 @@ public class Reservation {
     @OneToOne
     @JoinColumn(name = "id_paiment")
     private Paiment paiment;
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
 }

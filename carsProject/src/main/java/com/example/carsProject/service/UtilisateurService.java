@@ -47,8 +47,14 @@ public class UtilisateurService {
         utilisateur.setEmail(utilisateurDetails.getEmail());
         utilisateur.setPhone(utilisateurDetails.getPhone());
         utilisateur.setRole(utilisateurDetails.getRole());
+        utilisateur.setPassword(encoder.encode(utilisateurDetails.getPassword()));
 
         return utilisateurRepository.save(utilisateur);
+    }
+
+    // this is for login check
+    public Utilisateur getUtilisateurByEmail(String email){
+        return utilisateurRepository.findByEmail(email);
     }
 
     // Récupérer tous les utilisateurs
