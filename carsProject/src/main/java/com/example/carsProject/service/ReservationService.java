@@ -2,6 +2,7 @@ package com.example.carsProject.service;
 
 
 import com.example.carsProject.entity.Reservation;
+import com.example.carsProject.entity.Vehicule;
 import com.example.carsProject.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,9 @@ public class ReservationService {
     public  List<Reservation> getAllReservation() {
          List<Reservation> reservations = reservationRepository.findAll();
          return reservations;
+    }
+
+    public List<Reservation> getCarsByIdUser(Long idUser) {
+         return reservationRepository.findByUtilisateurId(idUser);
     }
 }
