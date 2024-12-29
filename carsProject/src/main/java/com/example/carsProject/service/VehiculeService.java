@@ -4,6 +4,7 @@ package com.example.carsProject.service;
 import com.example.carsProject.entity.Vehicule;
 import com.example.carsProject.repository.VehiculeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -97,10 +98,10 @@ public class VehiculeService {
     public List<String> getAllUniqueStatus() {
         return vehiculeRepository.findDistinctStatus();
     }
+
     public List<Vehicule> getFilteredVehicules(String marque, String type, Integer annee, String disponibilite, Float tarif) {
         return vehiculeRepository.findFilteredVehicules(marque, type, annee, disponibilite, tarif);
     }
-
 
 
 }

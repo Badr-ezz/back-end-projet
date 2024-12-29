@@ -23,7 +23,8 @@ public class VehiculeController {
         return ResponseEntity.ok(vehiculeService.countVehicule());
     }
 
-    @GetMapping
+
+    @GetMapping("/allVehicules")
     public List<Vehicule> getAll() {
         return vehiculeService.getAllUVehicule();
     }
@@ -38,13 +39,14 @@ public class VehiculeController {
         return ResponseEntity.ok(vehiculeService.updateVehicule(id, vehicule));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteVehicule/{id}")
     public void delete(@PathVariable Long id) {
         vehiculeService.deleteVehicule(id);
     }
 
-    @PostMapping
+    @PostMapping("/addVehicule")
     public Vehicule create(@RequestBody Vehicule vehicule) {
+        System.out.println("vehicule" + vehicule);
         return vehiculeService.addVehicule(vehicule);
     }
 
@@ -98,6 +100,7 @@ public class VehiculeController {
     public ResponseEntity<List<String>> getAllUniqueStatus() {
         return ResponseEntity.ok(vehiculeService.getAllUniqueStatus());
     }
+
 
 
     @GetMapping("filtered")
