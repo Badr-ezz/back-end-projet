@@ -17,7 +17,13 @@ import java.util.List;
 public class VehiculeController {
     public final VehiculeService vehiculeService;
 
-    @GetMapping
+    // Compter le nombre total des vehicules
+    @GetMapping("/count")
+    public ResponseEntity<Long> countVehicules() {
+        return ResponseEntity.ok(vehiculeService.countVehicule());
+    }
+
+    @GetMapping("/allVehicules")
     public List<Vehicule> getAll() {
         return vehiculeService.getAllUVehicule();
     }
@@ -32,13 +38,14 @@ public class VehiculeController {
         return ResponseEntity.ok(vehiculeService.updateVehicule(id, vehicule));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteVehicule/{id}")
     public void delete(@PathVariable Long id) {
         vehiculeService.deleteVehicule(id);
     }
 
-    @PostMapping
+    @PostMapping("/addVehicule")
     public Vehicule create(@RequestBody Vehicule vehicule) {
+        System.out.println("vehicule" + vehicule);
         return vehiculeService.addVehicule(vehicule);
     }
 

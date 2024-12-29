@@ -39,7 +39,7 @@ public class UtilisateurController {
     }
 
     // Ajouter un utilisateur
-    @PostMapping
+    @PostMapping("/addUser")
     public ResponseEntity<Utilisateur> addUtilisateur(@RequestBody Utilisateur utilisateur) {
         Utilisateur newUtilisateur = utilisateurService.addUtilisateur(utilisateur);
         return ResponseEntity.ok(newUtilisateur);
@@ -53,7 +53,7 @@ public class UtilisateurController {
     }
 
     // Récupérer tous les utilisateurs
-    @GetMapping
+    @GetMapping("/AllUtilisateurs")
     public ResponseEntity<List<Utilisateur>> getAllUtilisateurs() {
         return ResponseEntity.ok(utilisateurService.getAllUtilisateurs());
     }
