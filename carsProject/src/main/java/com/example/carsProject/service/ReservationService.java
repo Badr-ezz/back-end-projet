@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +45,25 @@ public class ReservationService {
 
     public void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
+    }
+
+
+
+    public List<Reservation> getConflictingReservations(Long vehId, LocalDate startDate, LocalDate endDate) {
+         return reservationRepository.findConflictingReservations(vehId, startDate, endDate);
+    }
+
+    public Reservation reservecar(Long idres, LocalDate startDate, LocalDate endDate) {
+         Optional<Reservation> result = reservationRepository.findById(idres);
+         Reservation reservation = null;
+         if (result.isPresent()) {
+             reservation = result.get();
+             reservation.setStatus("reserve");
+             reservation.setDateDebut(startDate);
+             reservation.setDateFin(endDate);
+             return reservationRepository.save(reservation);
+         }
+         return null;
     }
 }
 
