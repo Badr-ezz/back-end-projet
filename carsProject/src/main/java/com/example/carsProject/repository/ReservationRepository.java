@@ -21,4 +21,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
                                                   @Param("newStartDate") LocalDate newStartDate,
                                                   @Param("newEndDate") LocalDate newEndDate);
 
+
 }
+
+
+

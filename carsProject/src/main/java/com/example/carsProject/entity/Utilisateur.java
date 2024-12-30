@@ -1,6 +1,7 @@
 package com.example.carsProject.entity;
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class Utilisateur {
     private RoleType role;
 
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+
     @JsonIgnore
     List<Reservation> reservations;
 

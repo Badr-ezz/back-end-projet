@@ -1,6 +1,7 @@
 package com.example.carsProject.entity;
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class Vehicule {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     public Long id;
 
     public String marque;
@@ -39,7 +40,6 @@ public class Vehicule {
     public String detailpic;
 
     public String logoPath;
-
 
     public String features;
 

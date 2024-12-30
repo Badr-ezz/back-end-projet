@@ -27,7 +27,7 @@ public class UtilisateurService {
 
 
     // Compter le nombre total d'utilisateurs
-        public Long countUtilisateurs() {
+    public Long countUtilisateurs() {
         return utilisateurRepository.count();
     }
 

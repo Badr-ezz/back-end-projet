@@ -57,6 +57,7 @@ public class UtilisateurController {
 
     // Mettre à jour un utilisateur existant
     @PutMapping("/{id}")
+
         public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable Long id, @RequestBody Utilisateur utilisateurDetails) {
         System.out.println("user id " + id);
         System.out.println("data to change  " + utilisateurDetails);

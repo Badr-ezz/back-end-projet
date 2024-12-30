@@ -30,7 +30,13 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.addReservation(reservation));
     }
 
-    @GetMapping()
+    @GetMapping("/count")
+    public ResponseEntity<Long> countReservations() {
+        return ResponseEntity.ok(reservationService.countReservations());
+    }
+
+
+    @GetMapping("/allReservations")
     public ResponseEntity<List<Reservation>> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservation());
     }
@@ -40,11 +46,15 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getCarsByIdUser(id));
     }
 
+
+
     @DeleteMapping("/deletereservation/{id}")
     public ResponseEntity<?> deleteReservation(@PathVariable Long id){
-            reservationService.deleteReservation(id);
+        reservationService.deleteReservation(id);
         return ResponseEntity.ok("reservation deleted");
     }
+
+
 
     @GetMapping("/checkconflect/{idveh}/{dateDebut}/{dateFin}")
     public ResponseEntity<List<Reservation>> checkConflect(@PathVariable Long idveh, @PathVariable String dateDebut, @PathVariable String dateFin){
@@ -65,3 +75,6 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.reservecar(idres,datedebut, datefin));
     }
 }
+
+
+
