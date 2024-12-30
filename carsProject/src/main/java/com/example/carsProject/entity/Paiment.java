@@ -1,6 +1,7 @@
 package com.example.carsProject.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,7 +23,9 @@ public class Paiment {
 
     private String status;
 
+
     @OneToOne(mappedBy = "paiment", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Reservation reservation;
 
     @OneToOne(mappedBy = "paiment", cascade = CascadeType.ALL)
