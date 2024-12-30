@@ -28,7 +28,13 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.addReservation(reservation));
     }
 
-    @GetMapping()
+    @GetMapping("/count")
+    public ResponseEntity<Long> countReservations() {
+        return ResponseEntity.ok(reservationService.countReservations());
+    }
+
+
+    @GetMapping("/allReservations")
     public ResponseEntity<List<Reservation>> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservation());
     }

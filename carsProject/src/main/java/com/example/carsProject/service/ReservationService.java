@@ -25,6 +25,11 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    // Compter le nombre total de reservation
+    public Long countReservations() {
+        return reservationRepository.count();
+    }
+
     public  List<Reservation> getAllReservation() {
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations;
