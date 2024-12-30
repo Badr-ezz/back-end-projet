@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -36,5 +38,30 @@ public class ReservationController {
     @GetMapping("/reservedcars/{id}")
     public ResponseEntity<List<Reservation>> getCarsByIdUser(@PathVariable Long id){
         return ResponseEntity.ok(reservationService.getCarsByIdUser(id));
+    }
+
+    @DeleteMapping("/deletereservation/{id}")
+    public ResponseEntity<?> deleteReservation(@PathVariable Long id){
+            reservationService.deleteReservation(id);
+        return ResponseEntity.ok("reservation deleted");
+    }
+
+    @GetMapping("/checkconflect/{idveh}/{dateDebut}/{dateFin}")
+    public ResponseEntity<List<Reservation>> checkConflect(@PathVariable Long idveh, @PathVariable String dateDebut, @PathVariable String dateFin){
+        System.out.println("date debut entered in parameter" + dateDebut);
+        System.out.println("date fin entered in parameter" + dateFin);
+        LocalDate  datedebut = LocalDate.parse(dateDebut);
+        LocalDate  datefin = LocalDate.parse(dateFin);
+        System.out.println(datedebut);
+        System.out.println(datefin);
+        return ResponseEntity.ok(reservationService.getConflictingReservations(idveh, datedebut, datefin));
+    }
+
+    @GetMapping("/reservecar/{idres}/{dateDebut}/{dateFin}")
+    public ResponseEntity<Reservation> getReservationsByIdUser(@PathVariable Long idres, @PathVariable String dateDebut, @PathVariable String dateFin){
+        System.out.println("acces here done ");
+        LocalDate  datedebut = LocalDate.parse(dateDebut);
+        LocalDate  datefin = LocalDate.parse(dateFin);
+        return ResponseEntity.ok(reservationService.reservecar(idres,datedebut, datefin));
     }
 }
