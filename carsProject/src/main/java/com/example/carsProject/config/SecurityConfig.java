@@ -50,6 +50,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/vehicules/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/vehicules/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/vehicules/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/reservation/**").permitAll()
 
 
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
