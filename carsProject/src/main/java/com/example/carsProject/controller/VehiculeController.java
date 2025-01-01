@@ -107,11 +107,13 @@ public class VehiculeController {
             @RequestParam(required = false) String disponibilite,
             @RequestParam(required = false) Float tarif,
             @RequestParam(required = false) String dateDebut,
-            @RequestParam(required = false) String dateFin) {
+            @RequestParam(required = false) String dateFin,
+            @RequestParam(required = false) String searchTerm) {
 
         LocalDate startDate = dateDebut != null ? LocalDate.parse(dateDebut) : null;
         LocalDate endDate = dateFin != null ? LocalDate.parse(dateFin) : null;
 
-        return vehiculeService.getFilteredVehicules(marque, type, annee, disponibilite, tarif, startDate, endDate);
+        return vehiculeService.getFilteredVehicules(marque, type, annee, disponibilite, tarif, startDate, endDate, searchTerm);
     }
 }
+

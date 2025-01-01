@@ -100,12 +100,39 @@ public class VehiculeService {
         return vehiculeRepository.findDistinctStatus();
     }
 
-    public List<Vehicule> getFilteredVehicules(String marque, String type, Integer annee, String disponibilite, Float tarif, LocalDate startDate, LocalDate endDate) {
-        List<Vehicule> vehicules = vehiculeRepository.findFilteredVehicules(marque, type, annee, disponibilite, tarif);
+    public List<Vehicule> getFilteredVehicules(String marque, String type, Integer annee, String disponibilite, Float tarif, LocalDate startDate, LocalDate endDate, String searchTerm) {
+        List<Vehicule> vehicules = vehiculeRepository.findAll();
 
+        // Apply existing filters
+        if (marque != null) {
+            vehicules = vehicules.stream().filter(v -> v.getMarque().equalsIgnoreCase(marque)).collect(Collectors.toList());
+        }
+        if (type != null) {
+            vehicules = vehicules.stream().filter(v -> v.getVehiculeType().equalsIgnoreCase(type)).collect(Collectors.toList());
+        }
+        if (annee != null) {
+            vehicules = vehicules.stream().filter(v -> v.getAnnee().equals(annee)).collect(Collectors.toList());
+        }
+        if (disponibilite != null) {
+            vehicules = vehicules.stream().filter(v -> v.getStatus().equalsIgnoreCase(disponibilite)).collect(Collectors.toList());
+        }
+        if (tarif != null) {
+            vehicules = vehicules.stream().filter(v -> v.getPrix() <= tarif).collect(Collectors.toList());
+        }
+
+        // Apply date filtering
         if (startDate != null || endDate != null) {
             vehicules = vehicules.stream()
                     .filter(vehicule -> isVehiculeAvailable(vehicule.getId(), startDate, endDate))
+                    .collect(Collectors.toList());
+        }
+
+        // Apply search term filtering
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            String lowerSearchTerm = searchTerm.toLowerCase();
+            vehicules = vehicules.stream()
+                    .filter(v -> v.getMarque().toLowerCase().contains(lowerSearchTerm) ||
+                            v.getModele().toLowerCase().contains(lowerSearchTerm))
                     .collect(Collectors.toList());
         }
 
@@ -126,3 +153,4 @@ public class VehiculeService {
         return conflictingReservations.isEmpty();
     }
 }
+
