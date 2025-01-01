@@ -1,19 +1,22 @@
 package com.example.carsProject.service;
 
-
+import com.example.carsProject.entity.Reservation;
 import com.example.carsProject.entity.Vehicule;
+import com.example.carsProject.repository.ReservationRepository;
 import com.example.carsProject.repository.VehiculeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class VehiculeService {
     public final VehiculeRepository vehiculeRepository;
+    public final ReservationRepository reservationRepository;
 
     public Long countVehicule() { return vehiculeRepository.count(); }
 
@@ -24,7 +27,6 @@ public class VehiculeService {
     public Vehicule updateVehicule(Long id, Vehicule vehiculeDetails) {
         Vehicule vehicule = vehiculeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicule non trouvé avec l'ID : " + id));
-        ;
 
         vehicule.setAnnee(vehiculeDetails.getAnnee());
         vehicule.setMarque(vehiculeDetails.getMarque());
@@ -37,14 +39,13 @@ public class VehiculeService {
         return vehiculeRepository.save(vehicule);
     }
 
-        public List<Vehicule> getAllUVehicule() {
-            return vehiculeRepository.findAll();
+    public List<Vehicule> getAllUVehicule() {
+        return vehiculeRepository.findAll();
     }
 
     public Vehicule getVehiculeById(Long id) {
         return vehiculeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicule non trouvé avec l'ID : " + id));
-
     }
 
     public void deleteVehicule(Long id) {
@@ -59,7 +60,7 @@ public class VehiculeService {
     }
 
     public List<Vehicule> getVehiculeByMarque(String marque) {
-        return vehiculeRepository.findByMarque( marque);
+        return vehiculeRepository.findByMarque(marque);
     }
 
     public List<Vehicule> getVehiculeByModele(String modele) {
@@ -68,19 +69,19 @@ public class VehiculeService {
 
     public List<Vehicule> getVehiculeByPrixLessThan(float prix){
         return vehiculeRepository.findByPrixLessThan(prix);
-    };
+    }
 
     public List<Vehicule> getVehiculeByType(String vehiculeType){
         return vehiculeRepository.findByVehiculeType(vehiculeType);
-    };
+    }
 
     public List<Vehicule> getVehiculeByAnnee(Integer annee){
         return vehiculeRepository.findByAnnee(annee);
-    };
+    }
 
     public List<Vehicule> getVehiculeByStatus(String status){
         return vehiculeRepository.findByStatus(status);
-    };
+    }
 
     public List<String> getAllUniqueMarques() {
         return vehiculeRepository.findDistinctMarque();
@@ -99,9 +100,29 @@ public class VehiculeService {
         return vehiculeRepository.findDistinctStatus();
     }
 
-    public List<Vehicule> getFilteredVehicules(String marque, String type, Integer annee, String disponibilite, Float tarif) {
-        return vehiculeRepository.findFilteredVehicules(marque, type, annee, disponibilite, tarif);
+    public List<Vehicule> getFilteredVehicules(String marque, String type, Integer annee, String disponibilite, Float tarif, LocalDate startDate, LocalDate endDate) {
+        List<Vehicule> vehicules = vehiculeRepository.findFilteredVehicules(marque, type, annee, disponibilite, tarif);
+
+        if (startDate != null || endDate != null) {
+            vehicules = vehicules.stream()
+                    .filter(vehicule -> isVehiculeAvailable(vehicule.getId(), startDate, endDate))
+                    .collect(Collectors.toList());
+        }
+
+        return vehicules;
     }
 
+    private boolean isVehiculeAvailable(Long vehiculeId, LocalDate startDate, LocalDate endDate) {
+        if (startDate == null) {
+            return true;
+        }
 
+        List<Reservation> conflictingReservations = reservationRepository.findConflictingReservations(
+                vehiculeId,
+                startDate,
+                endDate != null ? endDate : startDate.plusYears(100)
+        );
+
+        return conflictingReservations.isEmpty();
+    }
 }

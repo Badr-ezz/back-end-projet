@@ -1,12 +1,12 @@
 package com.example.carsProject.controller;
 
-
 import com.example.carsProject.entity.Vehicule;
 import com.example.carsProject.service.VehiculeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +17,10 @@ import java.util.List;
 public class VehiculeController {
     public final VehiculeService vehiculeService;
 
-    // Compter le nombre total des vehicules
     @GetMapping("/count")
     public ResponseEntity<Long> countVehicules() {
         return ResponseEntity.ok(vehiculeService.countVehicule());
     }
-
 
     @GetMapping("/allVehicules")
     public List<Vehicule> getAll() {
@@ -49,7 +47,6 @@ public class VehiculeController {
         System.out.println("vehicule" + vehicule);
         return vehiculeService.addVehicule(vehicule);
     }
-
 
     @GetMapping("/bymarque")
     public ResponseEntity<List<Vehicule>> getByMarque(@RequestParam String marque){
@@ -80,6 +77,7 @@ public class VehiculeController {
     public ResponseEntity<List<Vehicule>> getByAnnee(@RequestParam Integer annee){
         return ResponseEntity.ok(vehiculeService.getVehiculeByAnnee(annee));
     }
+
     @GetMapping("/marques")
     public ResponseEntity<List<String>> getAllUniqueMarques() {
         return ResponseEntity.ok(vehiculeService.getAllUniqueMarques());
@@ -101,16 +99,19 @@ public class VehiculeController {
         return ResponseEntity.ok(vehiculeService.getAllUniqueStatus());
     }
 
-
-
     @GetMapping("filtered")
     public List<Vehicule> getFilteredVehicules(
             @RequestParam(required = false) String marque,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) Integer annee,
             @RequestParam(required = false) String disponibilite,
-            @RequestParam(required = false) Float tarif) {
-        return vehiculeService.getFilteredVehicules(marque, type, annee, disponibilite, tarif);
-    }
+            @RequestParam(required = false) Float tarif,
+            @RequestParam(required = false) String dateDebut,
+            @RequestParam(required = false) String dateFin) {
 
+        LocalDate startDate = dateDebut != null ? LocalDate.parse(dateDebut) : null;
+        LocalDate endDate = dateFin != null ? LocalDate.parse(dateFin) : null;
+
+        return vehiculeService.getFilteredVehicules(marque, type, annee, disponibilite, tarif, startDate, endDate);
+    }
 }
