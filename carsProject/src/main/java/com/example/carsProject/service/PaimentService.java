@@ -19,6 +19,7 @@ public class PaimentService {
     private final ReservationRepository reservationRepository;
 
     public Paiment addPaiment(Paiment paiment, Long reservationId) {
+        if (paiment != null && reservationId != null) {
             Paiment newPaiment = paimentRepository.save(paiment);
             Optional<Reservation> reservationToUpdate = reservationRepository.findById(reservationId);
             if (reservationToUpdate.isPresent()) {
@@ -27,6 +28,8 @@ public class PaimentService {
                 reservationRepository.save(reservation);
             }
             return newPaiment;
+        }
+           return  null ;
     }
 
     public List<Paiment> getallPaiment() {

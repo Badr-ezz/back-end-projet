@@ -5,6 +5,7 @@ import com.example.carsProject.entity.Utilisateur;
 import com.example.carsProject.repository.UtilisateurRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -129,5 +130,14 @@ public class UtilisateurService {
 
     public String logout (String token) {
         return jwtService.logout(token);
+    }
+
+    public Boolean checkCurrentPassword(Long id, String currentPassword) {
+            Utilisateur user = utilisateurRepository.findById(id).get();
+        System.out.println("current password enterd " + currentPassword);
+        System.out.println("current password bcypt " + encoder.encode(currentPassword));
+        System.out.println("user password  " + user.getPassword());
+
+            return user.getPassword().equals(encoder.encode(currentPassword));
     }
 }

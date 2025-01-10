@@ -23,6 +23,9 @@ public class Paiment {
 
     private String status;
 
+    private String cinClient;
+
+    private String numeroCarteBancaire;
 
     @OneToOne(mappedBy = "paiment", cascade = CascadeType.ALL)
     @JsonIgnore

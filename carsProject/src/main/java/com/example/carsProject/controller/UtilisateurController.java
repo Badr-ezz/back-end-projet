@@ -55,6 +55,12 @@ public class UtilisateurController {
         return ResponseEntity.ok(newUtilisateur);
     }
 
+    @PostMapping("/checkcurrentpassword/{id}")
+    public ResponseEntity<Boolean> checkCurrentPassword(@PathVariable Long id , @RequestBody String currentPassword) {
+        return ResponseEntity.ok(utilisateurService.checkCurrentPassword(id , currentPassword));
+    }
+
+
     // Mettre à jour un utilisateur existant
     @PutMapping("/{id}")
 

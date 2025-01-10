@@ -36,6 +36,7 @@ public class VehiculeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Vehicule> update(@PathVariable Long id, @RequestBody Vehicule vehicule) {
+        System.out.println("hi");
         return ResponseEntity.ok(vehiculeService.updateVehicule(id, vehicule));
     }
 
