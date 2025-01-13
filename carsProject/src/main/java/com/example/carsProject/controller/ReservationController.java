@@ -2,6 +2,7 @@ package com.example.carsProject.controller;
 
 
 import com.example.carsProject.entity.Reservation;
+import com.example.carsProject.entity.ReservationDetailsDTO;
 import com.example.carsProject.entity.Utilisateur;
 import com.example.carsProject.entity.Vehicule;
 import com.example.carsProject.service.ReservationService;
@@ -73,5 +74,10 @@ public class ReservationController {
     @GetMapping("/count")
     public ResponseEntity<Long> countReservations() {
         return ResponseEntity.ok(reservationService.countReservations());
+    }
+
+    @GetMapping("/reservationdetails/{id}")
+    public ResponseEntity<ReservationDetailsDTO> getReservationById(@PathVariable Long id){
+        return ResponseEntity.ok(reservationService.getReservationDetails(id));
     }
 }

@@ -2,8 +2,10 @@ package com.example.carsProject.service;
 
 
 import com.example.carsProject.entity.Reservation;
+import com.example.carsProject.entity.ReservationDetailsDTO;
 import com.example.carsProject.entity.Vehicule;
 import com.example.carsProject.repository.ReservationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -66,5 +68,11 @@ public class ReservationService {
             return reservationRepository.save(reservation);
         }
         return null;
+    }
+
+    public ReservationDetailsDTO getReservationDetails(Long reservationId) {
+        System.out.println("details : " + reservationRepository.findReservationDetailsById(reservationId));
+        return reservationRepository.findReservationDetailsById(reservationId)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found with ID: " + reservationId));
     }
 }
