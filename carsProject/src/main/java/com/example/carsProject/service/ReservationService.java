@@ -43,6 +43,9 @@ public class ReservationService {
     public List<Reservation> getCarsByIdUser(Long idUser) {
         return reservationRepository.findByUtilisateurId(idUser);
     }
+    public List<Reservation> findByUtilisateurIdAll(Long idUser) {
+        return reservationRepository.findByUtilisateurIdAll(idUser);
+    }
 
     public void deleteReservation(Long id) {
         reservationRepository.deleteById(id);

@@ -18,5 +18,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findConflictingReservations(@Param("vehicleId") Long vehicleId,
                                                   @Param("newStartDate") LocalDate newStartDate,
                                                   @Param("newEndDate") LocalDate newEndDate);
-
+    @Query("SELECT r FROM Reservation r WHERE r.utilisateur.id = :userId  ")
+    List<Reservation> findByUtilisateurIdAll(@Param("userId") Long userId);
 }

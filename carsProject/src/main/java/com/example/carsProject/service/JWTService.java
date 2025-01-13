@@ -35,7 +35,7 @@ public class JWTService {
                 .add(claims) // add the claims
                 .subject(user.getEmail()) // determine who this token belong to , it can be the id or the email , etc ....
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+                .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // set expiration to 1 hour from now
                 .and()
                 .signWith(SECRET_KEY) // the algo that is used to create the token
                 .compact()  // convert the jtw into a url-safe String format

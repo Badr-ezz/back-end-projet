@@ -40,6 +40,11 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getCarsByIdUser(id));
     }
 
+    @GetMapping("/allreservations/{id}")
+    public ResponseEntity<List<Reservation>> findByUtilisateurIdAll(@PathVariable Long id){
+        return ResponseEntity.ok(reservationService.findByUtilisateurIdAll(id));
+    }
+
     @DeleteMapping("/deletereservation/{id}")
     public ResponseEntity<?> deleteReservation(@PathVariable Long id){
         reservationService.deleteReservation(id);
